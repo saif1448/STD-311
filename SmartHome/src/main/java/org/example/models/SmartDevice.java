@@ -6,13 +6,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Data
 public class SmartDevice {
 
     protected int id;
-    protected boolean isTurnOn;
+    protected Boolean isTurnOn;
     protected String deviceName;
 
+    public SmartDevice(int id, boolean isTurnOn, String deviceName) {
+        this.id = id;
+        this.isTurnOn = isTurnOn;
+        this.deviceName = deviceName;
+    }
+
+    public SmartDevice(int id, String deviceName) {
+        this.id = id;
+        this.deviceName = deviceName;
+    }
 
 }
