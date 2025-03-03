@@ -25,4 +25,6 @@ public class SmartDevice {
         this.deviceName = deviceName;
     }
 
+    //show device details
+
 }

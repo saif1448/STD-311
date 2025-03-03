@@ -15,15 +15,28 @@ public class Main {
 
         homeController.showSmartDeviceStatus();
 
-//        homeController.toggleDeviceStatus(2);
+
         homeController.addSmartDevice();
 
-//        homeController.showSmartDeviceStatus();
+
 
         homeController.showSmartDeviceStatus();
 
         homeController.showDeviceType();
 
+        System.out.println("-----------------------------------");
+
+        homeController.increaseLightDimmingLevel(30);
+
+        System.out.println("-----------------------------------");
+
+        homeController.showAllDevices();
+
+        System.out.println("-----------------------------------");
+
+        homeController.increaseLightDimmingLevel(30);
+
+        homeController.showAllDevices();
 
 
     }

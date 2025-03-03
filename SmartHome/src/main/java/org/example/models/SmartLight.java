@@ -1,5 +1,10 @@
 package org.example.models;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
 public class SmartLight extends SmartDevice {
 
     private String lightCategory;
@@ -16,6 +21,23 @@ public class SmartLight extends SmartDevice {
         this.dimmingLevel = 24;
 
     }
+
+    public boolean increaseDimmingLevel() {
+        if (isDimmable) {
+            this.dimmingLevel++;
+            return true;
+        }
+        return false;
+    }
+    public boolean decreaseDimmingLevel() {
+        if (isDimmable) {
+            this.dimmingLevel--;
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 

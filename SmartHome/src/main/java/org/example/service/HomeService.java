@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.models.Home;
 import org.example.models.SmartDevice;
 import org.example.models.SmartLight;
+import org.example.models.SmartTheremostate;
 
 public class HomeService {
 
@@ -42,6 +43,20 @@ public class HomeService {
 //            }
             System.out.println("Name: " + smartDevice.getDeviceName() + " Type: "+ smartDevice.getClass().getName());
 
+        }
+    }
+
+    public void showAllSmartDevices(){
+        for (SmartDevice smartDevice : home.getAllSmartDevices()) {
+            if (smartDevice instanceof SmartLight) {
+                SmartLight smartLight = (SmartLight) smartDevice;
+                System.out.println(smartLight);
+            }else if (smartDevice instanceof SmartTheremostate) {
+                SmartTheremostate smartTheremostate = (SmartTheremostate) smartDevice;
+                System.out.println(smartTheremostate);
+            }else {
+                System.out.println(smartDevice);
+            }
         }
     }
 

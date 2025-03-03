@@ -15,6 +15,8 @@ public class HomeController {
 
     private Home home;
     private HomeService homeService;
+    private LightController lightController = new LightController();
+    private ThermostateController thermostateController = new ThermostateController();
 
     public HomeController(Home home) {
         this.home = home;
@@ -51,6 +53,10 @@ public class HomeController {
         });
     }
 
+    public void showAllDevices(){
+        homeService.showAllSmartDevices();
+    }
+
     public void addSmartDevice(){
         SmartDevice smartDevice1 = getNewLightDevice();
         homeService.addSmartDevice(smartDevice1);
@@ -59,16 +65,38 @@ public class HomeController {
     }
 
     private SmartDevice getNewLightDevice(){
-        SmartLight smartLight = new SmartLight(3,false, "Light 1", "LED", "WHiTE", false);
+        SmartLight smartLight = new SmartLight(30,false, "Light 1", "LED", "WHiTE", true);
         return  smartLight;
     }
 
     private SmartDevice getNewThermostaDevice(){
-        return new SmartTheremostate(7, false, "Thermostate 1", 32.1, 40.0);
+        return new SmartTheremostate(70, false, "Thermostate 1", 32.1);
     }
 
     public void showDeviceType(){
         homeService.showDeviceType();
     }
+
+    public void increaseLightDimmingLevel(int deviceId){
+        SmartLight smartLight = home.getSmartLight(deviceId);
+        smartLight = lightController.increaseDimmingLevel(smartLight);
+        home.updateSmartLight(smartLight, deviceId);
+    }
+
+    public void decreaseLightDimmingLevel(int deviceId){
+        SmartLight smartLight = home.getSmartLight(deviceId);
+        smartLight = lightController.decreaseDimmingLevel(smartLight);
+        home.updateSmartLight(smartLight, deviceId);
+    }
+
+    public void fixDimmingLevel(int deviceId, int dimmingLevel){
+        SmartLight smartLight = home.getSmartLight(deviceId);
+        smartLight = lightController.setDimmingLevel(smartLight, dimmingLevel);
+        home.updateSmartLight(smartLight, deviceId);
+    }
+
+
+
+
 
 }
