@@ -34,4 +34,22 @@ public class Home {
 
     }
 
+    public SmartTheremostate getSmartThermostat(int deviceId) {
+        for (var smartDevice : allSmartDevices) {
+            if (smartDevice.getId() == deviceId) {
+                return (SmartTheremostate) smartDevice;
+            }
+        }
+        return null;
+    }
+
+    public void updateSmartThermostat(SmartTheremostate smartThermostat, int deviceId) {
+        for (int i = 0; i < allSmartDevices.size(); i++) {
+            SmartDevice smartDevice = allSmartDevices.get(i);
+            if (smartDevice.getId() == deviceId && smartDevice instanceof SmartTheremostate) {
+                allSmartDevices.set(i, (SmartTheremostate) smartDevice);
+            }
+        }
+    }
+
 }

@@ -29,6 +29,7 @@ public class SmartLight extends SmartDevice {
         }
         return false;
     }
+
     public boolean decreaseDimmingLevel() {
         if (isDimmable) {
             this.dimmingLevel--;
@@ -37,8 +38,14 @@ public class SmartLight extends SmartDevice {
         return false;
     }
 
-
-
-
+    @Override
+    public void showDeviceDetails() {
+                System.out.println("Light Name: " + deviceName
+                + "\nDevice ID: " + id
+                + "\nDevice Category: " + lightCategory
+                + "\nDevice Color: " + lightColor
+                + "\nDimming Level: " + dimmingLevel
+                + "\nDevice Status: " + isTurnOn);
+    }
 
 }

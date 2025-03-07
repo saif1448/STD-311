@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 //@AllArgsConstructor
 @Data
-public class SmartDevice {
+public abstract class  SmartDevice {
 
     protected int id;
     protected Boolean isTurnOn;
@@ -26,5 +26,13 @@ public class SmartDevice {
     }
 
     //show device details
+
+//    public void showDeviceDetails() {
+//        System.out.println("Device Name: " + deviceName
+//        + "\nDevice ID: " + id
+//        + "\nDevice Status: "+ isTurnOn);
+//    }
+
+    public abstract void showDeviceDetails();
 
 }

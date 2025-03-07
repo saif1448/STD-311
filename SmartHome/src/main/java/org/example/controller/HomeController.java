@@ -65,7 +65,7 @@ public class HomeController {
     }
 
     private SmartDevice getNewLightDevice(){
-        SmartLight smartLight = new SmartLight(30,false, "Light 1", "LED", "WHiTE", true);
+        SmartDevice smartLight = new SmartLight(30,false, "Light 1", "LED", "WHiTE", true);
         return  smartLight;
     }
 
@@ -93,6 +93,18 @@ public class HomeController {
         SmartLight smartLight = home.getSmartLight(deviceId);
         smartLight = lightController.setDimmingLevel(smartLight, dimmingLevel);
         home.updateSmartLight(smartLight, deviceId);
+    }
+
+    public void increaseTemp(int deviceId) {
+        SmartTheremostate smartThermostat = home.getSmartThermostat(deviceId);
+        smartThermostat = thermostateController.increaseTemp(smartThermostat);
+        home.updateSmartThermostat(smartThermostat, deviceId);
+    }
+
+    public void decreaseTemp(int deviceId) {
+        SmartTheremostate smartThermostat = home.getSmartThermostat(deviceId);
+        smartThermostat = thermostateController.decreaseTemp(smartThermostat);
+        home.updateSmartThermostat(smartThermostat, deviceId);
     }
 
 

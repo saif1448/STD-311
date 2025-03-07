@@ -9,10 +9,6 @@ public class HomeService {
 
     private Home home;
 
-//    static {
-//
-//    }
-
     public HomeService(Home home) {
         this.home = home;
         initializeHome();
@@ -20,13 +16,13 @@ public class HomeService {
 
 
     private void initializeHome(){
-        SmartDevice smartDevice1 = new SmartDevice(1,  "device 1");
-        SmartDevice smartDevice2 = new SmartDevice(2, "device 2");
-        SmartDevice smartDevice3 = new SmartDevice(3, false, "device 3");
-
-        home.getAllSmartDevices().add(smartDevice1);
-        home.getAllSmartDevices().add(smartDevice2);
-        home.getAllSmartDevices().add(smartDevice3);
+//        SmartDevice smartDevice1 = new SmartDevice(1,  "device 1");
+//        SmartDevice smartDevice2 = new SmartDevice(2, "device 2");
+//        SmartDevice smartDevice3 = new SmartDevice(3, false, "device 3");
+//
+//        home.getAllSmartDevices().add(smartDevice1);
+//        home.getAllSmartDevices().add(smartDevice2);
+//        home.getAllSmartDevices().add(smartDevice3);
     }
 
 
@@ -49,19 +45,22 @@ public class HomeService {
     public void showAllSmartDevices(){
         for (SmartDevice smartDevice : home.getAllSmartDevices()) {
             if (smartDevice instanceof SmartLight) {
-                SmartLight smartLight = (SmartLight) smartDevice;
-                System.out.println(smartLight);
+//                SmartLight smartLight = (SmartLight) smartDevice;
+//                System.out.println(smartLight);
+                System.out.println("Smart Light Device");
+                smartDevice.showDeviceDetails();
             }else if (smartDevice instanceof SmartTheremostate) {
-                SmartTheremostate smartTheremostate = (SmartTheremostate) smartDevice;
-                System.out.println(smartTheremostate);
+//                SmartTheremostate smartTheremostate = (SmartTheremostate) smartDevice;
+//                System.out.println(smartTheremostate);
+                System.out.println("Smart Theremostate Device");
+                smartDevice.showDeviceDetails();
             }else {
+                System.out.println("General Smart Device");
                 System.out.println(smartDevice);
             }
+
+            System.out.println("===========================================");
         }
     }
-
-
-
-
 
 }
