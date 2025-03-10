@@ -28,6 +28,7 @@ public class Home {
         for(int i=0; i<allSmartDevices.size(); i++){
             SmartDevice smartDevice = allSmartDevices.get(i);
             if(smartDevice.getId() == deviceId && smartDevice instanceof SmartLight){
+                //TODO: Bug in the following line of code
                 allSmartDevices.set(i, (SmartLight) smartDevice);
             }
         }
@@ -47,6 +48,7 @@ public class Home {
         for (int i = 0; i < allSmartDevices.size(); i++) {
             SmartDevice smartDevice = allSmartDevices.get(i);
             if (smartDevice.getId() == deviceId && smartDevice instanceof SmartTheremostate) {
+                //TODO: Bug in the following line of code
                 allSmartDevices.set(i, (SmartTheremostate) smartDevice);
             }
         }

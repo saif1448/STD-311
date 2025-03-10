@@ -5,19 +5,19 @@ import org.example.models.SmartLight;
 
 public class LightController {
 
-    public SmartLight increaseDimmingLevel(SmartLight smartLight) {
+    public void increaseDimmingLevel(SmartLight smartLight) {
        smartLight.increaseDimmingLevel();
-       return smartLight;
+//       return smartLight;
     }
 
-    public SmartLight decreaseDimmingLevel(SmartLight smartLight) {
+    public void decreaseDimmingLevel(SmartLight smartLight) {
         smartLight.decreaseDimmingLevel();
-        return smartLight;
+//        return smartLight;
     }
 
-    public SmartLight setDimmingLevel(SmartLight smartLight, int dimmingLevel) {
+    public void setDimmingLevel(SmartLight smartLight, int dimmingLevel) {
         smartLight.setDimmingLevel(dimmingLevel);
-        return smartLight;
+//        return smartLight;
     }
 
 }

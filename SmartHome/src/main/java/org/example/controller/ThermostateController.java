@@ -4,12 +4,12 @@ import org.example.models.SmartTheremostate;
 
 public class ThermostateController{
 
-    public SmartTheremostate increaseTemp(SmartTheremostate smartThermostat) {
+    public void increaseTemp(SmartTheremostate smartThermostat) {
         smartThermostat.increaseTemperature();
-        return smartThermostat;
+//        return smartThermostat;
     }
-    public SmartTheremostate decreaseTemp(SmartTheremostate smartThermostat) {
+    public void decreaseTemp(SmartTheremostate smartThermostat) {
         smartThermostat.decreaseTemperature();
-        return smartThermostat;
+//        return smartThermostat;
     }
 }

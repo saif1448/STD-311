@@ -15,12 +15,14 @@ public class HomeController {
 
     private Home home;
     private HomeService homeService;
-    private LightController lightController = new LightController();
-    private ThermostateController thermostateController = new ThermostateController();
+    private LightController lightController;
+    private ThermostateController thermostateController;
 
     public HomeController(Home home) {
         this.home = home;
-        homeService = new HomeService(home);
+        this.homeService = new HomeService(home);
+        this.lightController = new LightController();
+        this.thermostateController = new ThermostateController();
     }
 
     public boolean toggleDeviceStatus(int deviceId){
@@ -48,13 +50,16 @@ public class HomeController {
     public void showSmartDeviceStatus(){
 
         home.getAllSmartDevices().forEach(e -> {
-            System.out.println("---------- Device Details : -----------");
+            System.out.println("---------- Device Status : -----------");
             System.out.println(e.getDeviceName() + " : " + e.getIsTurnOn());
         });
+        System.out.println("=====================================");
     }
 
     public void showAllDevices(){
+        System.out.println("---------- All Devices ----------");
         homeService.showAllSmartDevices();
+        System.out.println("===================================");
     }
 
     public void addSmartDevice(){
@@ -62,6 +67,11 @@ public class HomeController {
         homeService.addSmartDevice(smartDevice1);
         SmartDevice smartDevice2 = getNewThermostaDevice();
         homeService.addSmartDevice(smartDevice2);
+    }
+
+    //newly added specific device
+    public void addSmartDevice(SmartDevice smartDevice){
+        homeService.addSmartDevice(smartDevice);
     }
 
     private SmartDevice getNewLightDevice(){
@@ -79,32 +89,52 @@ public class HomeController {
 
     public void increaseLightDimmingLevel(int deviceId){
         SmartLight smartLight = home.getSmartLight(deviceId);
-        smartLight = lightController.increaseDimmingLevel(smartLight);
-        home.updateSmartLight(smartLight, deviceId);
+        //modifying 93 and 94
+//        smartLight = lightController.increaseDimmingLevel(smartLight);
+//        home.updateSmartLight(smartLight, deviceId);
+        if(smartLight != null){
+            lightController.increaseDimmingLevel(smartLight);
+        }
     }
 
     public void decreaseLightDimmingLevel(int deviceId){
         SmartLight smartLight = home.getSmartLight(deviceId);
-        smartLight = lightController.decreaseDimmingLevel(smartLight);
-        home.updateSmartLight(smartLight, deviceId);
+        //modified here
+//        smartLight = lightController.decreaseDimmingLevel(smartLight);
+//        home.updateSmartLight(smartLight, deviceId);
+        if(smartLight != null){
+            lightController.decreaseDimmingLevel(smartLight);
+        }
     }
 
-    public void fixDimmingLevel(int deviceId, int dimmingLevel){
+    public void setDimmingLevel(int deviceId, int dimmingLevel){
         SmartLight smartLight = home.getSmartLight(deviceId);
-        smartLight = lightController.setDimmingLevel(smartLight, dimmingLevel);
-        home.updateSmartLight(smartLight, deviceId);
+        //modified here
+//        smartLight = lightController.setDimmingLevel(smartLight, dimmingLevel);
+//        home.updateSmartLight(smartLight, deviceId);
+        if(smartLight != null){
+            lightController.setDimmingLevel(smartLight, dimmingLevel);
+        }
     }
 
     public void increaseTemp(int deviceId) {
         SmartTheremostate smartThermostat = home.getSmartThermostat(deviceId);
-        smartThermostat = thermostateController.increaseTemp(smartThermostat);
-        home.updateSmartThermostat(smartThermostat, deviceId);
+        //modified here
+//        smartThermostat = thermostateController.increaseTemp(smartThermostat);
+//        home.updateSmartThermostat(smartThermostat, deviceId);
+        if(smartThermostat != null){
+            thermostateController.increaseTemp(smartThermostat);
+        }
     }
 
     public void decreaseTemp(int deviceId) {
         SmartTheremostate smartThermostat = home.getSmartThermostat(deviceId);
-        smartThermostat = thermostateController.decreaseTemp(smartThermostat);
-        home.updateSmartThermostat(smartThermostat, deviceId);
+        //modify
+//        smartThermostat = thermostateController.decreaseTemp(smartThermostat);
+//        home.updateSmartThermostat(smartThermostat, deviceId);
+        if(smartThermostat != null){
+            thermostateController.decreaseTemp(smartThermostat);
+        }
     }
 
 
