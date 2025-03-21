@@ -17,22 +17,20 @@ public class Home {
     public SmartLight getSmartLight(int deviceId) {
         for (var smartDevice : allSmartDevices) {
             if(smartDevice.getId() == deviceId){
-                return (SmartLight) smartDevice;
+                return (SmartLight) smartDevice; // t1
             }
         }
         return null;
     }
 
     public void updateSmartLight(SmartLight smartLight, int deviceId) {
-
-        for(int i=0; i<allSmartDevices.size(); i++){
+        for (int i = 0; i < allSmartDevices.size(); i++) {
             SmartDevice smartDevice = allSmartDevices.get(i);
-            if(smartDevice.getId() == deviceId && smartDevice instanceof SmartLight){
-                //TODO: Bug in the following line of code
-                allSmartDevices.set(i, (SmartLight) smartDevice);
+            if (smartDevice.getId() == deviceId && smartDevice instanceof SmartLight) {
+                allSmartDevices.set(i, smartLight);
+                break;
             }
         }
-
     }
 
     public SmartTheremostate getSmartThermostat(int deviceId) {
@@ -48,8 +46,7 @@ public class Home {
         for (int i = 0; i < allSmartDevices.size(); i++) {
             SmartDevice smartDevice = allSmartDevices.get(i);
             if (smartDevice.getId() == deviceId && smartDevice instanceof SmartTheremostate) {
-                //TODO: Bug in the following line of code
-                allSmartDevices.set(i, (SmartTheremostate) smartDevice);
+                allSmartDevices.set(i, smartThermostat);
             }
         }
     }

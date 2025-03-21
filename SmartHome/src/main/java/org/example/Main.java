@@ -16,30 +16,13 @@ public class Main {
         Home home = new Home();
         homeController = new HomeController(home);
 
-//        homeController.showSmartDeviceStatus();
-
-
         homeController.addSmartDevice();
 
 
+       homeController.toggleDeviceStatus(30);
 
-//        homeController.showSmartDeviceStatus();
-//
-//        homeController.showDeviceType();
-//
-//        System.out.println("-----------------------------------");
-//
-//        homeController.increaseLightDimmingLevel(30);
-//
-//        System.out.println("-----------------------------------");
-//
-//        homeController.showAllDevices();
-//
-//        System.out.println("-----------------------------------");
-//
-//        homeController.increaseLightDimmingLevel(30);
+       homeController.increaseTemp(70);
 
-        homeController.showAllDevices();
 
 
 

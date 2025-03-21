@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .house {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .room {
+            width: 200px;
+            height: 200px;
+            border: 2px solid black;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .light-on {
+            background-color: yellow;
+        }
+
+        .light-off {
+            background-color: lightgray;
+        }
+
+        /* Optional: You can also add a background color for rooms with lights ON */
+        .room-light-on {
+            background-color: lightyellow;
+        }
+
+        .room-light-off {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Smart Home Control</h1>
+    <div class="house">
+        <div class="room" id="room1">
+            <h3>Living Room</h3>
+            <p>Light: <span id="light1-status">OFF</span></p>
+            <button onclick="toggleLight(1)">Toggle Light</button>
+            <p>Temperature: <span id="temp1">22°C</span></p>
+            <button onclick="adjustTemperature(1, 'increase')">Increase Temp</button>
+            <button onclick="adjustTemperature(1, 'decrease')">Decrease Temp</button>
+        </div>
+        <div class="room" id="room2">
+            <h3>Bedroom</h3>
+            <p>Light: <span id="light2-status">OFF</span></p>
+            <button onclick="toggleLight(2)">Toggle Light</button>
+            <p>Temperature: <span id="temp2">22°C</span></p>
+            <button onclick="adjustTemperature(2, 'increase')">Increase Temp</button>
+            <button onclick="adjustTemperature(2, 'decrease')">Decrease Temp</button>
+        </div>
+        <div class="room" id="room3">
+            <h3>Kitchen</h3>
+            <p>Light: <span id="light3-status">OFF</span></p>
+            <button onclick="toggleLight(3)">Toggle Light</button>
+            <p>Temperature: <span id="temp3">22°C</span></p>
+            <button onclick="adjustTemperature(3, 'increase')">Increase Temp</button>
+            <button onclick="adjustTemperature(3, 'decrease')">Decrease Temp</button>
+        </div>
+    </div>
+
+    <script>
+        // Connect to the WebSocket server
+        const ws = new WebSocket('ws://localhost:3000');
+
+        // When the WebSocket connection is open, listen for updates
+        ws.onopen = () => {
+            console.log('WebSocket connection established');
+        };
+
+        // When the server sends data, update the DOM
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const rooms = data.rooms;
+
+            Object.keys(rooms).forEach(roomId => {
+                const room = rooms[roomId];
+                const lightStatus = room.light;
+                const temperature = room.temperature;
+
+                // Update light status
+                document.getElementById(`light${roomId}-status`).textContent = lightStatus;
+
+                // Update the entire room background color based on light status
+                const roomDiv = document.getElementById(`room${roomId}`);
+                if (lightStatus === 'ON') {
+                    roomDiv.className = 'room room-light-on';
+                } else {
+                    roomDiv.className = 'room room-light-off';
+                }
+
+                // Update temperature
+                document.getElementById(`temp${roomId}`).textContent = `${temperature}°C`;
+            });
+        };
+
+        // Toggle light
+        function toggleLight(roomId) {
+            fetch(`http://localhost:3000/api/light/${roomId}/TOGGLE`, { method: 'POST' });
+        }
+
+        // Adjust temperature
+        function adjustTemperature(roomId, action) {
+            // Make a request to the server to adjust the temperature
+            fetch(`http://localhost:3000/api/temperature/${roomId}/${action}`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message); // Log the server's response (optional)
+                })
+                .catch(error => {
+                    console.error('Error adjusting temperature:', error);
+                });
+        }
+    </script>
+</body>
+
+</html>

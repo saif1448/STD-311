@@ -1,5 +1,9 @@
 package org.example.controller;
 
+import feign.Feign;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import org.example.apiInterface.SmartHomeApiClient;
 import org.example.models.Home;
 import org.example.models.SmartDevice;
 import org.example.models.SmartLight;
@@ -7,6 +11,7 @@ import org.example.models.SmartTheremostate;
 import org.example.service.HomeService;
 
 import java.util.logging.Logger;
+
 
 
 public class HomeController {
@@ -18,11 +23,18 @@ public class HomeController {
     private LightController lightController;
     private ThermostateController thermostateController;
 
+    private final SmartHomeApiClient client;
+
     public HomeController(Home home) {
         this.home = home;
         this.homeService = new HomeService(home);
         this.lightController = new LightController();
         this.thermostateController = new ThermostateController();
+
+        this.client = Feign.builder()
+                .decoder(new JacksonDecoder())  // To decode JSON responses
+                .encoder(new JacksonEncoder())  // To encode requests
+                .target(SmartHomeApiClient.class, "http://localhost:3000");
     }
 
     public boolean toggleDeviceStatus(int deviceId){
@@ -39,6 +51,7 @@ public class HomeController {
 
                 }finally {
                     smartDevice.setIsTurnOn(!currentStatus);
+                    client.updateLight("2", "toggle");
                 }
                 break;
             }
@@ -88,8 +101,9 @@ public class HomeController {
     }
 
     public void increaseLightDimmingLevel(int deviceId){
-        SmartLight smartLight = home.getSmartLight(deviceId);
-        //modifying 93 and 94
+        SmartLight smartLight = home.getSmartLight(deviceId);  // t2 = t1
+         client.updateLight("1", "toggle");
+        //modifying 106 and 107
 //        smartLight = lightController.increaseDimmingLevel(smartLight);
 //        home.updateSmartLight(smartLight, deviceId);
         if(smartLight != null){
@@ -124,6 +138,7 @@ public class HomeController {
 //        home.updateSmartThermostat(smartThermostat, deviceId);
         if(smartThermostat != null){
             thermostateController.increaseTemp(smartThermostat);
+            client.updateTemperature("2", "increase");
         }
     }
 
