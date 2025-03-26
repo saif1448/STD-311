@@ -17,25 +17,25 @@ public class HomeViewController {
     HomeController homeController = new HomeController(home);
 
     public HomeViewController() {
-        homeController.addSmartDevice();
+//        homeController.addSmartDevice();
     }
 
     @FXML
     private void handleToggleLightBtn(){
         System.out.println("toggle light");
-        homeController.toggleDeviceStatus(30);
+//        homeController.toggleDeviceStatus(30);
     }
 
     @FXML
     private void handleIncTempBtn(){
         System.out.println("inc temp");
-        homeController.increaseTemp(70);
+//        homeController.increaseTemp(70);
     }
 
     @FXML
     private void handleDecTempBtn(){
         System.out.println("dec temp");
-        homeController.decreaseTemp(70);
+//        homeController.decreaseTemp(70);
     }
 
 

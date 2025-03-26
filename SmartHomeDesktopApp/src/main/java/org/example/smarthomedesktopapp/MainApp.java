@@ -7,6 +7,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainApp extends Application {
     @Override
@@ -20,6 +22,8 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
+
         launch();
+
     }
 }

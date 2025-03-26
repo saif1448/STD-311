@@ -14,11 +14,24 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Initial states for rooms
+// let rooms = {
+//     1: { light: 'OFF', temperature: 22 },
+//     2: { light: 'OFF', temperature: 22 },
+//     3: { light: 'OFF', temperature: 22 }
+// };
+
 let rooms = {
-    1: { light: 'OFF', temperature: 22 },
-    2: { light: 'OFF', temperature: 22 },
-    3: { light: 'OFF', temperature: 22 }
-};
+    "Living Room" : {
+        1: { light: 'OFF', temperature: 22 },
+        2: { light: 'OFF', temperature: 22 },
+        3: { light: 'OFF', temperature: 22 } 
+    },
+    "Dining Room" : {
+        1: { light: 'OFF', temperature: 22 },
+        2: { light: 'OFF', temperature: 22 },
+        3: { light: 'OFF', temperature: 22 } 
+    },
+}
 
 // WebSocket connection handler
 wss.on('connection', ws => {
