@@ -6,7 +6,8 @@ import feign.RequestLine;
 public interface SmartHomeApiClient {
 
     // Endpoint to get the status of rooms
-    @RequestLine("GET /api/status")
+//    @RequestLine("GET /api/statu")
+    @RequestLine(APIEndpoints.API_STATUS)
     String getStatus();
 
     // Endpoint to update light status

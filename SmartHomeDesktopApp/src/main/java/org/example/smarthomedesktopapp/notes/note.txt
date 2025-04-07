@@ -1,0 +1,26 @@
+
+Abstract class doesnt need to contain any abstract method. it is not mandatory
+
+Abstract method does also demonstrate the property of inheritance.
+
+For the case inheritance, a class cannot extend from multiple classes.
+
+Allowed versions of inheritance are
+
+1. Single
+2. multi-level
+3. We don't allow multiple inheritance because it can create ambiguity
+4. Because of the diamond problem, we don't allow multiple inheritance
+5. Hierarchial inheritance is allowed
+6. Hybrid inheritance is not allowed
+
+
+Interface
+1. 100% abstract
+2. There will be absolutely no concrete method in the interface
+3. The property which is mentioned in the interface is by default final
+4. Because of this the property mus be assigned a value
+5. You dont have to use the abstract key word because by default everything is abstract here
+6. When we want to use an interface, we have to use the implements keyword
+7. You can force the use to override a method
+8. We use interface to solve the multiple inheritance problem

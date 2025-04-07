@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Random;
 
 @Data
-public class SmartTheremostate extends SmartDevice {
+public  class  SmartTheremostate extends SmartDevice {
     private double temperature;
     private double humidity;
 
