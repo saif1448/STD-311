@@ -4,127 +4,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Home</title>
+    <title>Smart Home Automation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
             text-align: center;
         }
 
-        .house {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 50px;
-        }
-
         .room {
-            width: 200px;
-            height: 200px;
-            border: 2px solid black;
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .room div {
+            flex: 1;
+        }
+
+        .room h3 {
+            margin: 0 0 10px;
+        }
+
+        .room button {
             padding: 10px;
-            transition: background-color 0.3s ease;
+            margin: 5px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
         }
 
-        .light-on {
-            background-color: yellow;
+        .room button.off {
+            background-color: #dc3545;
         }
 
-        .light-off {
-            background-color: lightgray;
-        }
-
-        /* Optional: You can also add a background color for rooms with lights ON */
-        .room-light-on {
-            background-color: lightyellow;
-        }
-
-        .room-light-off {
-            background-color: lightgray;
+        .room .status {
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <h1>Smart Home Control</h1>
-    <div class="house">
-        <div class="room" id="room1">
-            <h3>Living Room</h3>
-            <p>Light: <span id="light1-status">OFF</span></p>
-            <button onclick="toggleLight(1)">Toggle Light</button>
-            <p>Temperature: <span id="temp1">22°C</span></p>
-            <button onclick="adjustTemperature(1, 'increase')">Increase Temp</button>
-            <button onclick="adjustTemperature(1, 'decrease')">Decrease Temp</button>
-        </div>
-        <div class="room" id="room2">
-            <h3>Bedroom</h3>
-            <p>Light: <span id="light2-status">OFF</span></p>
-            <button onclick="toggleLight(2)">Toggle Light</button>
-            <p>Temperature: <span id="temp2">22°C</span></p>
-            <button onclick="adjustTemperature(2, 'increase')">Increase Temp</button>
-            <button onclick="adjustTemperature(2, 'decrease')">Decrease Temp</button>
-        </div>
-        <div class="room" id="room3">
-            <h3>Kitchen</h3>
-            <p>Light: <span id="light3-status">OFF</span></p>
-            <button onclick="toggleLight(3)">Toggle Light</button>
-            <p>Temperature: <span id="temp3">22°C</span></p>
-            <button onclick="adjustTemperature(3, 'increase')">Increase Temp</button>
-            <button onclick="adjustTemperature(3, 'decrease')">Decrease Temp</button>
-        </div>
-    </div>
+
+    <header>
+        <h1>Smart Home Automation</h1>
+    </header>
+
+    <div id="roomsContainer"></div>
 
     <script>
-        // Connect to the WebSocket server
-        const ws = new WebSocket('ws://localhost:3000');
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fetch room data and render the UI
+            fetchRooms();
 
-        // When the WebSocket connection is open, listen for updates
-        ws.onopen = () => {
-            console.log('WebSocket connection established');
-        };
+            // Fetch room data from the API
+            function fetchRooms() {
+                fetch('/api/rooms')
+                    .then(response => response.json())
+                    .then(data => {
+                        const rooms = data.rooms;
+                        const roomsContainer = document.getElementById('roomsContainer');
+                        roomsContainer.innerHTML = ''; // Clear the container before appending new content
 
-        // When the server sends data, update the DOM
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            const rooms = data.rooms;
+                        rooms.forEach(room => {
+                            const roomElement = document.createElement('div');
+                            roomElement.classList.add('room');
+                            roomElement.innerHTML = `
+                                <div>
+                                    <h3>${room.name}</h3>
+                                    <p class="status">Light: ${room.light}</p>
+                                    <button class="lightToggle">${room.light === 'ON' ? 'Turn Off Light' : 'Turn On Light'}</button>
+                                </div>
+                                <div>
+                                    <p class="status">Temperature: ${room.temperature}°C</p>
+                                    <button class="increaseTemp">Increase Temp</button>
+                                    <button class="decreaseTemp">Decrease Temp</button>
+                                </div>
+                            `;
 
-            Object.keys(rooms).forEach(roomId => {
-                const room = rooms[roomId];
-                const lightStatus = room.light;
-                const temperature = room.temperature;
+                            // Add event listeners for light toggle
+                            const lightToggleButton = roomElement.querySelector('.lightToggle');
+                            lightToggleButton.addEventListener('click', () => toggleLight(room.id));
 
-                // Update light status
-                document.getElementById(`light${roomId}-status`).textContent = lightStatus;
+                            // Add event listeners for temperature controls
+                            const increaseTempButton = roomElement.querySelector('.increaseTemp');
+                            increaseTempButton.addEventListener('click', () => adjustTemperature(room.id, 'increase'));
 
-                // Update the entire room background color based on light status
-                const roomDiv = document.getElementById(`room${roomId}`);
-                if (lightStatus === 'ON') {
-                    roomDiv.className = 'room room-light-on';
-                } else {
-                    roomDiv.className = 'room room-light-off';
-                }
+                            const decreaseTempButton = roomElement.querySelector('.decreaseTemp');
+                            decreaseTempButton.addEventListener('click', () => adjustTemperature(room.id, 'decrease'));
 
-                // Update temperature
-                document.getElementById(`temp${roomId}`).textContent = `${temperature}°C`;
-            });
-        };
+                            roomsContainer.appendChild(roomElement);
+                        });
+                    });
+            }
 
-        // Toggle light
-        function toggleLight(roomId) {
-            fetch(`http://localhost:3000/api/light/${roomId}/TOGGLE`, { method: 'POST' });
-        }
+            // Toggle light on/off
+            function toggleLight(roomId) {
+                const status = document.querySelector(`#room${roomId} .lightToggle`).innerText.includes('Off') ? 'ON' : 'OFF';
+                fetch(`/api/rooms/${roomId}/light/${status}`, { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message); // Show the success message
+                        fetchRooms(); // Refresh the room data
+                    });
+            }
 
-        // Adjust temperature
-        function adjustTemperature(roomId, action) {
-            // Make a request to the server to adjust the temperature
-            fetch(`http://localhost:3000/api/temperature/${roomId}/${action}`, { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.message); // Log the server's response (optional)
-                })
-                .catch(error => {
-                    console.error('Error adjusting temperature:', error);
-                });
-        }
+            // Adjust temperature
+            function adjustTemperature(roomId, action) {
+                fetch(`/api/rooms/${roomId}/temperature/${action}`, { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message); // Show the success message
+                        fetchRooms(); // Refresh the room data
+                    });
+            }
+        });
     </script>
 </body>
 
