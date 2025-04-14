@@ -4,10 +4,7 @@ import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import org.example.smarthomedesktopapp.apiInterface.SmartHomeApiClient;
-import org.example.smarthomedesktopapp.models.Home;
-import org.example.smarthomedesktopapp.models.SmartDevice;
-import org.example.smarthomedesktopapp.models.SmartLight;
-import org.example.smarthomedesktopapp.models.SmartTheremostate;
+import org.example.smarthomedesktopapp.models.*;
 import org.example.smarthomedesktopapp.service.HomeService;
 
 import java.util.logging.Logger;
@@ -34,64 +31,31 @@ public class HomeController {
                 .decoder(new JacksonDecoder())  // To decode JSON responses
                 .encoder(new JacksonEncoder())  // To encode requests
                 .target(SmartHomeApiClient.class, "http://localhost:3000");
+
+
+        for (var roomKey : home.getAllRooms().keySet()) {
+            client.addLight(roomKey);
+            client.addTemperature(roomKey);
+        }
     }
 
-//    public boolean toggleDeviceStatus(int deviceId) {
-//
-//        for (var smartDevice : home.getAllSmartDevices()) {
-//            if (smartDevice.getId() == deviceId) {
-//                if (smartDevice.getId() == deviceId) {
-//                    boolean currentStatus = false;
-//                    try {
-//                        currentStatus = smartDevice.getIsTurnOn();
-//
-//                    } catch (Exception e) {
-//                        logger.info(e.getMessage());
-//                        currentStatus = false;
-//
-//                    } finally {
-//                        smartDevice.setIsTurnOn(!currentStatus);
-//                        client.updateLight("2", "toggle");
-//                    }
-//                    break;
-//                }
-//            }
-//
-//            return true;
-//        }
-//
-//        return false;
-//
-//    }
-
-    public void changeDeviceStatus(String roomName, int deviceId, boolean deviceStatus) {
+    public void changeDeviceStatus(String roomName, int deviceId) {
+        boolean deviceStatus = !homeService.getLightDeviceStatus(roomName, deviceId);
         home.changeRoomDeviceStatus(roomName, deviceId, deviceStatus);
+        if (deviceStatus) {
+            client.updateLight(roomName, "ON");
+        }
+        else {
+            client.updateLight(roomName, "OFF");
+        }
     }
 
 
 
     public void showSmartDeviceStatus(String roomName){
 
-//        home.getAllSmartDevices().forEach(e -> {
-//            System.out.println("---------- Device Status : -----------");
-//            System.out.println(e.getDeviceName() + " : " + e.getIsTurnOn());
-//        });
-//        System.out.println("=====================================");
         home.showRoomSmartDeviceStatus(roomName);
     }
-
-//    public void showAllDevices(){
-//        System.out.println("---------- All Devices ----------");
-//        homeService.showAllSmartDevices();
-//        System.out.println("===================================");
-//    }
-
-//    public void addSmartDevice(){
-//        SmartDevice smartDevice1 = getNewLightDevice();
-//        homeService.addSmartDevice(smartDevice1);
-//        SmartDevice smartDevice2 = getNewThermostaDevice();
-//        homeService.addSmartDevice(smartDevice2);
-//    }
 
 
     //newly added specific device
@@ -99,14 +63,6 @@ public class HomeController {
         homeService.addSmartDevice(roomName, smartDevice);
     }
 
-//    private SmartDevice getNewLightDevice(){
-//        SmartDevice smartLight = new SmartLight(30,false, "Light 1", "LED", "WHiTE", true);
-//        return  smartLight;
-//    }
-
-//    private SmartDevice getNewThermostaDevice(){
-//        return new SmartTheremostate(70, false, "Thermostate 1", 32.1);
-//    }
 
     public void showDeviceType(String roomName){
         homeService.showDeviceType(roomName);
@@ -165,20 +121,13 @@ public class HomeController {
     }
 
     public void increaseTemp(String roomName, int deviceId) {
-//        SmartTheremostate smartThermostat = home.getSmartThermostat(deviceId);
-//        //modified here
-////        smartThermostat = thermostateController.increaseTemp(smartThermostat);
-////        home.updateSmartThermostat(smartThermostat, deviceId);
-//        if(smartThermostat != null){
-//            thermostateController.increaseTemp(smartThermostat);
-//            client.updateTemperature("2", "increase");
-//        }
 
         SmartTheremostate smartThermostat = null;
         try {
-            smartThermostat = (SmartTheremostate) home.getAllRooms().get(roomName).getAllSmartDevices().get(deviceId);
+            smartThermostat = (SmartTheremostate) home.getAllRooms().get(roomName).getSmartDevice(deviceId);
             if(smartThermostat != null){
                 thermostateController.increaseTemp(smartThermostat);
+                client.updateTemperature(roomName, "increase");
             }
         } catch (Exception e) {
             System.out.println("The given id is not for Smart Thermostat");
@@ -186,20 +135,13 @@ public class HomeController {
     }
 
     public void decreaseTemp(String roomName, int deviceId) {
-//        SmartTheremostate smartThermostat = home.getSmartThermostat(deviceId);
-//        //modify
-////        smartThermostat = thermostateController.decreaseTemp(smartThermostat);
-////        home.updateSmartThermostat(smartThermostat, deviceId);
-//        if(smartThermostat != null){
-//            thermostateController.decreaseTemp(smartThermostat);
-//            client.updateTemperature("2", "decrease");
-//        }
 
         SmartTheremostate smartThermostat = null;
         try {
-            smartThermostat = (SmartTheremostate) home.getAllRooms().get(roomName).getAllSmartDevices().get(deviceId);
+            smartThermostat = (SmartTheremostate) home.getAllRooms().get(roomName).getSmartDevice(deviceId);
             if(smartThermostat != null){
                 thermostateController.decreaseTemp(smartThermostat);
+                client.updateTemperature(roomName, "decrease");
             }
         } catch (Exception e) {
             System.out.println("The given id is not for Smart Thermostat");

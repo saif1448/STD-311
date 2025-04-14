@@ -73,7 +73,7 @@ public class Home {
     public void changeRoomDeviceStatus(String roomName, int deviceId, boolean deviceStatus){
         for(var roomKey : allRooms.keySet()){
             if (roomKey.equals(roomName)){
-                allRooms.remove(roomKey).changeDeviceStatus(deviceId, deviceStatus);
+                allRooms.get(roomKey).changeDeviceStatus(deviceId, deviceStatus);
             }
         }
     }

@@ -25,7 +25,7 @@
          </font>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e5eaef" height="308.0" layoutX="284.0" layoutY="124.0" stroke="BLACK" strokeType="INSIDE" width="208.0" />
-      <Button fx:id="toggle_light_btn_2" layoutX="322.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleToggleLightBtn" text="Toggle Light">
+      <Button fx:id="toggle_light_btn_2" layoutX="322.0" layoutY="185.0" mnemonicParsing="false" onAction="#handelLightToggle" text="Toggle Light">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
