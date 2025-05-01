@@ -29,6 +29,7 @@ public class HomeService {
         Room kitchen  = new Room();
         kitchen.setRoomName("Kitchen Room");
 
+
         // 2 ---> bedroom ---> 2 ---> 2+2 -->4
         // 1 ---> living ---> 1 ---> 1 + 1 --> 4
         // 3 ---> kitchen ---> 3 ---> 3 + 3 ---> 6
