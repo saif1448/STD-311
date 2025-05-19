@@ -2,6 +2,7 @@ package org.example.contactManagement;
 
 import lombok.Getter;
 import org.example.models.Contact;
+import org.example.models.Person;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
 public class ContactManagerService {
     private static ContactManagerService instance;
     private Map<String, ArrayList<Contact>> contactList = new HashMap<>();
+    private Map<String, String> personList = new HashMap<>();
 
     private ContactManagerService() {
     }
@@ -22,12 +24,35 @@ public class ContactManagerService {
         return instance;
     }
 
-    public <T extends Contact> void addContactDB(T contact) {
-        String name = contact.getName();
+    public <T extends Contact> void addContactDB(T contact, Person person) {
+        String personId = person.getPersonId();
 
-        if (!contactList.containsKey(name)) {
-            contactList.put(name, new ArrayList<>());
+        if (!contactList.containsKey(personId)) {
+            contactList.put(personId, new ArrayList<>());
+            personList.put(personId, person.getPersonName());
         }
-        contactList.get(name).add(contact);
+        contactList.get(personId).add(contact);
+    }
+
+    public List<Person> findByPersonName(String personName) {
+        List<Person> selectedPersonList = new ArrayList<>();
+        for (var person : personList.entrySet()) {
+            if (personName.equals(person.getValue())) {
+                Person p = Person.builder()
+                        .personId(person.getKey())
+                        .personName(person.getValue())
+                        .build();
+                selectedPersonList.add(p);
+            }
+        }
+        if (selectedPersonList.size() < 1) {
+            Person p = Person.builder()
+                    .personId("P1234")
+                    .personName(personName)
+                    .build();
+            selectedPersonList.add(p);
+            personList.put(p.getPersonId(), p.getPersonName());
+        }
+        return selectedPersonList;
     }
 }

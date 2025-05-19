@@ -5,7 +5,7 @@ import org.example.models.Contact;
 public class ContactManager<T extends Contact> {
     ContactManagerService contactManagerService = ContactManagerService.getInstance();
 
-    public void addContact(T newContact) {
+    public void addContact(T newContact, String personName) {
         contactManagerService.addContactDB(newContact);
     }
     public void showAllContacts() {
