@@ -16,7 +16,7 @@ public class MainApp {
         businessContact.setName("Adam Khan");
 
         Contact emergencyContact = new EmergencyContact();
-        emergencyContact.setName("Salma Khan");
+        emergencyContact.setName("Adam Khan");
 
         Contact socialMediaContact = new SocialMediaContact();
         socialMediaContact.setName("Adam Khan");
