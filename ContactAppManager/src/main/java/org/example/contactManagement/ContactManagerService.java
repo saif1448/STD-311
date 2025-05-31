@@ -3,6 +3,7 @@ package org.example.contactManagement;
 import lombok.Getter;
 import org.example.models.Contact;
 import org.example.models.Person;
+import org.example.utils.PersonIdGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,12 +48,18 @@ public class ContactManagerService {
         }
         if (selectedPersonList.size() < 1) {
             Person p = Person.builder()
-                    .personId("P1234")
+                    .personId(PersonIdGenerator.generateUniqueId())
                     .personName(personName)
                     .build();
             selectedPersonList.add(p);
             personList.put(p.getPersonId(), p.getPersonName());
         }
         return selectedPersonList;
+    }
+
+    public void deleteAllContact(Person person) {
+        String personId = person.getPersonId();
+        personList.remove(personId);
+        contactList.remove(personId);
     }
 }
