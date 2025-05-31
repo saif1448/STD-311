@@ -14,6 +14,7 @@ public class ContactManager {
     public ContactManager(Scanner sc) {
         this.sc = sc;
     }
+
     public <T extends Contact> void addContact(T newContact, String personName) {
         List<Person> person = contactManagerService.findByPersonName(personName);
         Person selectedPerson;
