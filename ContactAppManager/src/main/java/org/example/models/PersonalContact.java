@@ -6,12 +6,24 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 //@ToString(callSuper = true)
 public class PersonalContact extends Contact{
     private String dob;
     private String address;
+
+    public PersonalContact(String name, String phoneNumber, String email, ContactCategory contactCategory, String dob, String address) {
+        super(name, phoneNumber, email, contactCategory);
+        this.dob = dob;
+        this.address = address;
+    }
+
+    public PersonalContact(String dob, String address) {
+        this.dob = dob;
+        this.address = address;
+        this.contactCategory = ContactCategory.PERSONAL;
+    }
 
     @Override
     public String toString() {
