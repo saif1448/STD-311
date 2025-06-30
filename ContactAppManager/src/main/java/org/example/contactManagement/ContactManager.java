@@ -1,7 +1,6 @@
 package org.example.contactManagement;
 
-import org.example.models.Contact;
-import org.example.models.Person;
+import org.example.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +82,13 @@ public void showAllContacts() {
         }
         contactManagerService.deleteAllContact(selectedPerson);
         System.out.println("The person has been deleted " + personName);
+
+    }
+
+    public void updateContact(String personName) {
+       Contact contactTobeUpdated = new BusinessContact();
+
+       contactTobeUpdated.updateContact(sc);
     }
 
 }

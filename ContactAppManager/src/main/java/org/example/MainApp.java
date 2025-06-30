@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.contactManagement.ContactFactory;
 import org.example.contactManagement.ContactManager;
 import org.example.models.*;
 
@@ -17,31 +18,31 @@ public class MainApp {
             System.out.println("1. Add Contact \n" +
                     "2. Show all Contact \n" +
                     "3. Delete Contact Person \n" +
-                    "4. Exit Application" );
+                    "4. Update Contact \n" +
+                    "5. Exit Application");
             int option = Integer.parseInt(sc.nextLine());
             switch (option) {
                 case 1:
-                    Contact personalContact = new PersonalContact("01/01/1999", "123 Street");
-                    contactManager.addContact(personalContact, "Kelly");
-                    Contact personalContact2 = new BusinessContact("k@g.com", "123 Street",
-                            "123","Abc company", "Manager");
-                    contactManager.addContact(personalContact2, "Kelly");
-
-                    Contact personalContact3 = new PersonalContact("01/01/1999", "123 Street");
-                    contactManager.addContact(personalContact3, "Dan");
-                    Contact personalContact4 = new BusinessContact("k@g.com", "123 Street",
-                            "123","Abc company", "Analyst");
-                    contactManager.addContact(personalContact4, "Dan");
+                    System.out.println("Enter person name to add contact for:");
+                    String personName = sc.nextLine();
+                    ContactFactory contactFactory = new ContactFactory(sc);
+                    Contact contact = contactFactory.createContact();
+                    contactManager.addContact(contact, personName);
+                    System.out.println("Contact added successfully!");
                     break;
                 case 2:
                     contactManager.showAllContacts();
                     break;
                 case 3:
                     System.out.println("Enter the Person Name to delete: ");
-                    String personName = sc.nextLine();
+                    personName = sc.nextLine();
                     contactManager.deletePerson(personName);
                     break;
                 case 4:
+                    System.out.println("Enter the Person Name to delete: ");
+                    personName = sc.nextLine();
+                    contactManager.updateContact(personName);
+                case 5:
                     isAppRunning = false;
                     System.out.println("Good Bye");
                     break;
@@ -50,7 +51,6 @@ public class MainApp {
             }
 
         }
-
 
     }
 }

@@ -61,5 +61,6 @@ public class ContactManagerService {
         String personId = person.getPersonId();
         personList.remove(personId);
         contactList.remove(personId);
+
     }
 }
