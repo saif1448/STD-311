@@ -1,10 +1,15 @@
 package org.example.contactManagement;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.Getter;
 import org.example.models.Contact;
 import org.example.models.Person;
 import org.example.utils.PersonIdGenerator;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +20,15 @@ public class ContactManagerService {
     private Map<String, ArrayList<Contact>> contactList = new HashMap<>();
     private Map<String, String> personList = new HashMap<>();
 
+    private final String FILEPATH_CONTACT = "contacts.json";
+    private final String FILEPATH_PERSON = "persons.json";
+    private final ObjectMapper mapper;
+
     private ContactManagerService() {
+        this.mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        personList = loadData(FILEPATH_PERSON, HashMap.class);
+        contactList = loadData(FILEPATH_CONTACT, HashMap.class);
     }
 
     public static ContactManagerService getInstance() {
@@ -35,10 +48,30 @@ public class ContactManagerService {
         contactList.get(personId).add(contact);
     }
 
+    private  <T extends HashMap<?, ?>> T loadData(String filePath, Class<T> type) {
+        File file = new File(filePath);
+        try {
+            if (!file.exists()) {
+                return type.getDeclaredConstructor().newInstance();
+            }
+            return mapper.readValue(file, new TypeReference<T>() {});
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error loading data from file: " + filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error creating instance of type: " + type.getName());
+        }
+
+        return null;
+    }
+
     public List<Person> findByPersonName(String personName) {
+        personName = personName.toLowerCase();
         List<Person> selectedPersonList = new ArrayList<>();
         for (var person : personList.entrySet()) {
-            if (personName.equals(person.getValue())) {
+            String name = person.getValue().toLowerCase();
+            if (name.contains(personName)) {
                 Person p = Person.builder()
                         .personId(person.getKey())
                         .personName(person.getValue())
