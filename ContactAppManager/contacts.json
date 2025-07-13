@@ -1,0 +1,92 @@
+{
+  "p1": [
+    {
+      "name": "Alice Home",
+      "phoneNumber": "123-456-7890",
+      "email": "alice.home@example.com",
+      "contactCategory": "PERSONAL",
+      "dob": "1990-05-15",
+      "address": "123 Maple St, Springfield"
+    },
+    {
+      "name": "Alice Office",
+      "phoneNumber": "123-555-7890",
+      "email": "alice.office@example.com",
+      "contactCategory": "BUSINESS",
+      "dob": "1990-05-15",
+      "address": "456 Elm St, Springfield"
+    }
+  ],
+  "p2": [
+    {
+      "name": "Bob Home",
+      "phoneNumber": "222-333-4444",
+      "email": "bob@example.com",
+      "contactCategory": "PERSONAL",
+      "dob": "1985-08-22",
+      "address": "789 Oak Ave, Metropolis"
+    },
+    {
+      "name": "Bob Doctor",
+      "phoneNumber": "999-888-7777",
+      "email": "doctor.bob@example.com",
+      "contactCategory": "EMERGENCY",
+      "dob": "",
+      "address": "General Hospital, Metropolis"
+    }
+  ],
+  "p3": [
+    {
+      "name": "Charlie Home",
+      "phoneNumber": "333-444-5555",
+      "email": "charlie@example.com",
+      "contactCategory": "PERSONAL",
+      "dob": "1992-11-11",
+      "address": "101 Pine Rd, Gotham"
+    },
+    {
+      "name": "Charlie Lawyer",
+      "phoneNumber": "777-666-5555",
+      "email": "law.charlie@example.com",
+      "contactCategory": "BUSINESS",
+      "dob": "",
+      "address": "Law Office, Gotham"
+    }
+  ],
+  "p4": [
+    {
+      "name": "Diana Home",
+      "phoneNumber": "444-555-6666",
+      "email": "diana@example.com",
+      "contactCategory": "PERSONAL",
+      "dob": "1987-03-12",
+      "address": "202 Willow St, Star City"
+    },
+    {
+      "name": "Diana Gym",
+      "phoneNumber": "666-555-4444",
+      "email": "trainer.diana@example.com",
+      "contactCategory": "SOCIAL_MEDIA",
+      "dob": "",
+      "address": "Fitness Club, Star City"
+    }
+  ],
+  "p5": [
+    {
+      "name": "Ethan Home",
+      "phoneNumber": "555-666-7777",
+      "email": "ethan@example.com",
+      "contactCategory": "PERSONAL",
+      "dob": "1980-02-28",
+      "address": "303 Cedar Blvd, Central City"
+    },
+    {
+      "name": "Ethan Agent",
+      "phoneNumber": "111-222-3333",
+      "email": "agency.ethan@example.com",
+      "contactCategory": "BUSINESS",
+      "dob": "",
+      "address": "Secret Agency, Central City"
+    }
+  ]
+}
