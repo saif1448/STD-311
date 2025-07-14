@@ -27,8 +27,8 @@ public class ContactManagerService {
     private ContactManagerService() {
         this.mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        personList = loadData(FILEPATH_PERSON, HashMap.class);
-        contactList = loadData(FILEPATH_CONTACT, HashMap.class);
+        personList = loadPersonData(FILEPATH_PERSON);
+        contactList = loadContactData(FILEPATH_CONTACT);
     }
 
     public static ContactManagerService getInstance() {
@@ -48,22 +48,30 @@ public class ContactManagerService {
         contactList.get(personId).add(contact);
     }
 
-    private  <T extends HashMap<?, ?>> T loadData(String filePath, Class<T> type) {
-        File file = new File(filePath);
+   private HashMap<String, String> loadPersonData(String filePath) {
         try {
-            if (!file.exists()) {
-                return type.getDeclaredConstructor().newInstance();
+            File file = new File(filePath);
+            if(!file.exists()) {
+                return new HashMap<>();
             }
-            return mapper.readValue(file, new TypeReference<T>() {});
+            return mapper.readValue(file, new TypeReference<HashMap<String, String>>() {});
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error loading data from file: " + filePath);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error creating instance of type: " + type.getName());
+            return new HashMap<>();
         }
+    }
 
-        return null;
+    private HashMap<String, ArrayList<Contact>> loadContactData(String filePath) {
+        try {
+            File file = new File(filePath);
+            if(!file.exists()) {
+                return new HashMap<>();
+            }
+            return mapper.readValue(file, new TypeReference<HashMap<String, ArrayList<Contact>>>() {});
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
     }
 
     public List<Person> findByPersonName(String personName) {

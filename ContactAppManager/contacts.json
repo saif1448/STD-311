@@ -1,6 +1,7 @@
 {
   "p1": [
     {
+      "type": "PersonalContact",
       "name": "Alice Home",
       "phoneNumber": "123-456-7890",
       "email": "alice.home@example.com",
@@ -9,16 +10,21 @@
       "address": "123 Maple St, Springfield"
     },
     {
+      "type": "BusinessContact",
       "name": "Alice Office",
       "phoneNumber": "123-555-7890",
       "email": "alice.office@example.com",
       "contactCategory": "BUSINESS",
-      "dob": "1990-05-15",
-      "address": "456 Elm St, Springfield"
+      "companyName": "Springfield Corp",
+      "businessTitle": "Accountant",
+      "businessEmail": "alice.office@example.com",
+      "businessAddress": "456 Elm St, Springfield",
+      "businessPhoneNumber": "123-555-7890"
     }
   ],
   "p2": [
     {
+      "type": "PersonalContact",
       "name": "Bob Home",
       "phoneNumber": "222-333-4444",
       "email": "bob@example.com",
@@ -27,16 +33,19 @@
       "address": "789 Oak Ave, Metropolis"
     },
     {
+      "type": "EmergencyContact",
       "name": "Bob Doctor",
       "phoneNumber": "999-888-7777",
       "email": "doctor.bob@example.com",
       "contactCategory": "EMERGENCY",
-      "dob": "",
-      "address": "General Hospital, Metropolis"
+      "relation": "Doctor",
+      "priorityLevel": 1,
+      "alternativeNumber": "000-111-2222"
     }
   ],
   "p3": [
     {
+      "type": "PersonalContact",
       "name": "Charlie Home",
       "phoneNumber": "333-444-5555",
       "email": "charlie@example.com",
@@ -45,16 +54,21 @@
       "address": "101 Pine Rd, Gotham"
     },
     {
+      "type": "BusinessContact",
       "name": "Charlie Lawyer",
       "phoneNumber": "777-666-5555",
       "email": "law.charlie@example.com",
       "contactCategory": "BUSINESS",
-      "dob": "",
-      "address": "Law Office, Gotham"
+      "companyName": "Gotham Legal",
+      "businessTitle": "Lawyer",
+      "businessEmail": "law.charlie@example.com",
+      "businessAddress": "Law Office, Gotham",
+      "businessPhoneNumber": "777-666-5555"
     }
   ],
   "p4": [
     {
+      "type": "PersonalContact",
       "name": "Diana Home",
       "phoneNumber": "444-555-6666",
       "email": "diana@example.com",
@@ -63,16 +77,18 @@
       "address": "202 Willow St, Star City"
     },
     {
+      "type": "SocialMediaContact",
       "name": "Diana Gym",
       "phoneNumber": "666-555-4444",
       "email": "trainer.diana@example.com",
-      "contactCategory": "SOCIAL_MEDIA",
-      "dob": "",
-      "address": "Fitness Club, Star City"
+      "contactCategory": "SOCIAL",
+      "socialMediaName": "Instagram",
+      "handleName": "@trainerDiana"
     }
   ],
   "p5": [
     {
+      "type": "PersonalContact",
       "name": "Ethan Home",
       "phoneNumber": "555-666-7777",
       "email": "ethan@example.com",
@@ -81,12 +97,16 @@
       "address": "303 Cedar Blvd, Central City"
     },
     {
+      "type": "BusinessContact",
       "name": "Ethan Agent",
       "phoneNumber": "111-222-3333",
       "email": "agency.ethan@example.com",
       "contactCategory": "BUSINESS",
-      "dob": "",
-      "address": "Secret Agency, Central City"
+      "companyName": "Central Ops",
+      "businessTitle": "Agent",
+      "businessEmail": "agency.ethan@example.com",
+      "businessAddress": "Secret Agency, Central City",
+      "businessPhoneNumber": "111-222-3333"
     }
   ]
 }
