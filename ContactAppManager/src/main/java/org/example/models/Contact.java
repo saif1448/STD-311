@@ -19,5 +19,5 @@ public abstract class Contact {
     protected String email;
     protected ContactCategory contactCategory;
 
-    public abstract  void updateContact(Scanner sc);
+    public abstract void updateContact(Scanner sc);
 }

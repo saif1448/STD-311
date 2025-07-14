@@ -1,17 +1,18 @@
 package org.example.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Scanner;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ToString(callSuper = true)
+@ToString
 @SuperBuilder
-@Setter
-public class BusinessContact extends Contact {
+public class BusinessContact extends Contact{
     private String businessEmail;
     private String businessAddress;
     private String businessPhoneNumber;
@@ -19,8 +20,8 @@ public class BusinessContact extends Contact {
     private String businessTitle;
 
     public BusinessContact(String name, String phoneNumber, String email, ContactCategory contactCategory,
-            String businessEmail, String businessAddress, String businessPhoneNumber, String companyName,
-            String businessTitle) {
+                           String businessEmail, String businessAddress, String businessPhoneNumber,
+                           String companyName, String businessTitle) {
         super(name, phoneNumber, email, contactCategory);
         this.businessEmail = businessEmail;
         this.businessAddress = businessAddress;
@@ -29,8 +30,8 @@ public class BusinessContact extends Contact {
         this.businessTitle = businessTitle;
     }
 
-    public BusinessContact(String businessEmail, String businessAddress, String businessPhoneNumber, String companyName,
-            String businessTitle) {
+    public BusinessContact(String businessEmail, String businessAddress, String businessPhoneNumber,
+                           String companyName, String businessTitle) {
         this.businessEmail = businessEmail;
         this.businessAddress = businessAddress;
         this.businessPhoneNumber = businessPhoneNumber;
@@ -42,6 +43,7 @@ public class BusinessContact extends Contact {
 
     @Override
     public void updateContact(Scanner sc) {
+
         System.out.println("Updating Business Contact...");
 
         System.out.print("Enter contact name (leave blank to keep current): ");
@@ -75,6 +77,8 @@ public class BusinessContact extends Contact {
         System.out.print("Enter business title: ");
         input = sc.nextLine();
         if (!input.isEmpty()) this.businessTitle = input;
+
+
 
     }
 }

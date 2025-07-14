@@ -1,141 +1,132 @@
 package org.example.contactManagement;
 
 import org.example.models.*;
+
 import java.util.Scanner;
 
 public class ContactFactory {
-    private final Scanner scanner;
+    private Scanner sc;
 
-    public ContactFactory(Scanner scanner) {
-        this.scanner = scanner;
+    public ContactFactory(Scanner sc) {
+        this.sc = sc;
     }
 
-    public Contact createContact() {
-        System.out.println("Select Contact Type:");
-        System.out.println("1. Personal Contact");
-        System.out.println("2. Business Contact");
-        System.out.println("3. Emergency Contact");
-        System.out.println("4. Social Media Contact");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
-
-        System.out.println("Enter contact name:");
-        String name = scanner.nextLine();
-
-        System.out.println("Enter contact number:");
-        String number = scanner.nextLine();
-
-        return switch (choice) {
-            case 1 -> createPersonalContact(name, number);
-            case 2 -> createBusinessContact(name, number);
-            case 3 -> createEmergencyContact(name, number);
-            case 4 -> createSocialMediaContact(name, number);
-            default -> throw new IllegalArgumentException("Invalid contact type");
-        };
+    public Contact createContact(String name) {
+        System.out.println("Select Contact Type: \n" +
+                "1. Personal Contact \n" +
+                "2. Business Contact \n" +
+                "3. Emergency Contact \n" +
+                "4. Social Media Contact");
+        int contactType = Integer.parseInt(sc.nextLine());
+        Contact newContact = null;
+        switch (contactType) {
+            case 1:
+                newContact = createPersonalContact(name);
+                break;
+            case 2:
+                newContact = createBusinessContact(name);
+                break;
+            case 3:
+                newContact = createEmergencyContact(name);
+                break;
+            case 4:
+                newContact = createSocialMediaContact(name);
+                break;
+            default:
+                System.out.println("Invalid contact type.");
+        }
+        return newContact;
     }
 
-    private PersonalContact createPersonalContact(String name, String number) {
+    private PersonalContact createPersonalContact(String name) {
+        System.out.println("Enter phone number:");
+        String phoneNumber = sc.nextLine();
         System.out.println("Enter email:");
-        String email = scanner.nextLine();
-
+        String email = sc.nextLine();
         System.out.println("Enter date of birth:");
-        String dob = scanner.nextLine();
-
+        String dob = sc.nextLine();
         System.out.println("Enter address:");
-        String address = scanner.nextLine();
+        String address = sc.nextLine();
 
-        PersonalContact contact = PersonalContact.builder()
+        return PersonalContact.builder()
                 .name(name)
-                .phoneNumber(number)
+                .phoneNumber(phoneNumber)
                 .email(email)
-                .contactCategory(ContactCategory.PERSONAL)
                 .dob(dob)
                 .address(address)
+                .contactCategory(ContactCategory.PERSONAL)
                 .build();
-
-        return contact;
     }
 
-    private BusinessContact createBusinessContact(String name, String number) {
+    private BusinessContact createBusinessContact(String name) {
+        System.out.println("Enter phone number:");
+        String phoneNumber = sc.nextLine();
         System.out.println("Enter email:");
-        String email = scanner.nextLine();
-
+        String email = sc.nextLine();
         System.out.println("Enter business email:");
-        String businessEmail = scanner.nextLine();
-
+        String businessEmail = sc.nextLine();
         System.out.println("Enter business address:");
-        String businessAddress = scanner.nextLine();
-
+        String businessAddress = sc.nextLine();
         System.out.println("Enter business phone number:");
-        String businessPhoneNumber = scanner.nextLine();
-
+        String businessPhoneNumber = sc.nextLine();
         System.out.println("Enter company name:");
-        String companyName = scanner.nextLine();
-
+        String companyName = sc.nextLine();
         System.out.println("Enter business title:");
-        String businessTitle = scanner.nextLine();
+        String businessTitle = sc.nextLine();
 
-        BusinessContact contact = BusinessContact.builder()
+        return BusinessContact.builder()
                 .name(name)
-                .phoneNumber(number)
+                .phoneNumber(phoneNumber)
                 .email(email)
-                .contactCategory(ContactCategory.BUSINESS)
                 .businessEmail(businessEmail)
                 .businessAddress(businessAddress)
                 .businessPhoneNumber(businessPhoneNumber)
                 .companyName(companyName)
                 .businessTitle(businessTitle)
+                .contactCategory(ContactCategory.BUSINESS)
                 .build();
-
-        return contact;
     }
 
-    private EmergencyContact createEmergencyContact(String name, String number) {
+    private EmergencyContact createEmergencyContact(String name) {
+        System.out.println("Enter phone number:");
+        String phoneNumber = sc.nextLine();
         System.out.println("Enter email:");
-        String email = scanner.nextLine();
+        String email = sc.nextLine();
+        System.out.println("Enter relationship:");
+        String relation = sc.nextLine();
+        System.out.println("Enter priority level:");
+        int priorityLevel = Integer.parseInt(sc.nextLine());
+        System.out.println("Enter alternate phone number:");
+        String alternatePhoneNumber = sc.nextLine();
 
-        System.out.println("Enter relation (e.g., Father, Friend, Neighbor):");
-        String relation = scanner.nextLine();
-
-        System.out.println("Enter priority level (1 for highest priority, 2 for secondary):");
-        int priorityLevel = Integer.parseInt(scanner.nextLine());
-
-        System.out.println("Enter alternative number:");
-        String alternativeNumber = scanner.nextLine();
-
-        EmergencyContact contact = EmergencyContact.builder()
+        return EmergencyContact.builder()
                 .name(name)
-                .phoneNumber(number)
+                .phoneNumber(phoneNumber)
                 .email(email)
-                .contactCategory(ContactCategory.EMERGENCY)
                 .relation(relation)
                 .priorityLevel(priorityLevel)
-                .alternativeNumber(alternativeNumber)
+                .alternativeNumber(alternatePhoneNumber)
+                .contactCategory(ContactCategory.EMERGENCY)
                 .build();
-
-        return contact;
     }
 
-    private SocialMediaContact createSocialMediaContact(String name, String number) {
+    private SocialMediaContact createSocialMediaContact(String name) {
+        System.out.println("Enter phone number:");
+        String phoneNumber = sc.nextLine();
         System.out.println("Enter email:");
-        String email = scanner.nextLine();
-
-        System.out.println("Enter social media name (e.g., Twitter, Instagram, LinkedIn):");
-        String socialMediaName = scanner.nextLine();
-
+        String email = sc.nextLine();
+        System.out.println("Enter social media platform:");
+        String socialMediaName = sc.nextLine();
         System.out.println("Enter handle name:");
-        String handleName = scanner.nextLine();
+        String handleName = sc.nextLine();
 
-        SocialMediaContact contact = SocialMediaContact.builder()
+        return SocialMediaContact.builder()
                 .name(name)
-                .phoneNumber(number)
+                .phoneNumber(phoneNumber)
                 .email(email)
-                .contactCategory(ContactCategory.SOCIAL)
                 .socialMediaName(socialMediaName)
                 .handleName(handleName)
+                .contactCategory(ContactCategory.SOCIAL)
                 .build();
-
-        return contact;
     }
 }
