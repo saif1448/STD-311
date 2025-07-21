@@ -1,5 +1,7 @@
 package org.example.models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,13 @@ import java.util.Scanner;
 @NoArgsConstructor
 @ToString
 @SuperBuilder
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = BusinessContact.class, name = "BusinessContact"),
+        @JsonSubTypes.Type(value = PersonalContact.class, name = "PersonalContact"),
+        @JsonSubTypes.Type(value = EmergencyContact.class, name = "EmergencyContact"),
+        @JsonSubTypes.Type(value = SocialMediaContact.class, name = "SocialMediaContact"),
+})
 public abstract class Contact {
     protected String name;
     protected String phoneNumber;

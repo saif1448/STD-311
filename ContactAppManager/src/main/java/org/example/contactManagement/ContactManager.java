@@ -27,6 +27,7 @@ public class ContactManager {
             selectedPerson = person.getFirst();
         }
         contactManagerService.addContactDB(newContact, selectedPerson);
+        contactManagerService.saveData();
         System.out.println("The Contact has been added. ");
     }
 
@@ -98,6 +99,7 @@ public class ContactManager {
             selectedPerson = person.getFirst();
         }
         contactManagerService.deleteAllContact(selectedPerson);
+        contactManagerService.saveData();
         System.out.println("The person has been deleted " + personName);
     }
 
@@ -116,6 +118,11 @@ public class ContactManager {
         ListVidualizer.printList(contactManagerService.getContactList().get(selectedPerson.getPersonId()));
         int selectedContactNumber = Integer.parseInt(sc.nextLine());
         contactManagerService.getContactList().get(selectedPerson.getPersonId()).remove(selectedContactNumber - 1);
+        if (contactManagerService.getContactList().get(selectedPerson.getPersonId()).isEmpty()) {
+            contactManagerService.getContactList().remove(selectedPerson.getPersonId());
+            contactManagerService.getPersonList().remove(selectedPerson.getPersonId());
+        }
+        contactManagerService.saveData();
         System.out.println("Selected Contact Number has been deleted.");
     }
 
@@ -142,6 +149,7 @@ public class ContactManager {
         int selectedContactNumber = Integer.parseInt(sc.nextLine());
         Contact contactToUpdate = contacts.get(selectedContactNumber - 1);
         contactToUpdate.updateContact(sc);
+        contactManagerService.saveData();
 
         System.out.println("The contact has been updated successfully.");
     }
