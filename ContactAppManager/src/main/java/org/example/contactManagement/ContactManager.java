@@ -117,7 +117,9 @@ public class ContactManager {
         System.out.println("Select the Contact to delete: ");
         ListVidualizer.printList(contactManagerService.getContactList().get(selectedPerson.getPersonId()));
         int selectedContactNumber = Integer.parseInt(sc.nextLine());
-        contactManagerService.getContactList().get(selectedPerson.getPersonId()).remove(selectedContactNumber - 1);
+        contactManagerService.getContactList().get(selectedPerson.getPersonId())
+                .remove(selectedContactNumber - 1);
+
         if (contactManagerService.getContactList().get(selectedPerson.getPersonId()).isEmpty()) {
             contactManagerService.getContactList().remove(selectedPerson.getPersonId());
             contactManagerService.getPersonList().remove(selectedPerson.getPersonId());
