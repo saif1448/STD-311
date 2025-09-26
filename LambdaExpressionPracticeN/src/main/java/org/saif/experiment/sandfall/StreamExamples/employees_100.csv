@@ -1,0 +1,101 @@
+id,name,department,salary,experience,location
+101,Hannah,Marketing,65017,11,Boston
+102,Bob,Operations,90062,10,Chicago
+103,Bob,IT,94341,5,Los Angeles
+104,Zane,Operations,72047,6,San Francisco
+105,Julia,Finance,108249,10,Chicago
+106,Wendy,HR,77013,11,New York
+107,Julia,Marketing,109591,8,Los Angeles
+108,Bob,IT,66220,14,Los Angeles
+109,Charlie,Operations,61935,2,Boston
+110,Charlie,HR,107014,11,Los Angeles
+111,Edward,HR,100961,15,Boston
+112,Yara,HR,70057,3,San Francisco
+113,Diana,HR,89237,5,New York
+114,Laura,Finance,112909,6,Boston
+115,Diana,Finance,73225,4,Los Angeles
+116,Kevin,Operations,53452,5,Chicago
+117,Michael,Marketing,40002,13,New York
+118,George,Marketing,100535,6,San Francisco
+119,Charlie,HR,82877,11,New York
+120,Nina,IT,59722,6,San Francisco
+121,Paula,Operations,94903,7,San Francisco
+122,Charlie,Marketing,92611,5,Chicago
+123,Alice,Marketing,77676,2,Boston
+124,Quentin,IT,115661,7,Los Angeles
+125,Paula,Marketing,98673,15,San Francisco
+126,Ian,Marketing,91004,15,Los Angeles
+127,Diana,IT,117400,11,San Francisco
+128,Victor,HR,71416,14,Los Angeles
+129,Xavier,HR,106686,8,Chicago
+130,Wendy,Finance,114187,5,San Francisco
+131,Uma,HR,57244,8,San Francisco
+132,Quentin,HR,45568,14,San Francisco
+133,Hannah,Operations,48299,9,San Francisco
+134,Julia,Finance,93668,15,Boston
+135,Ian,Operations,115790,7,Los Angeles
+136,Fiona,HR,54312,14,Boston
+137,Rachel,HR,61131,14,New York
+138,Michael,HR,74061,6,San Francisco
+139,Yara,HR,90484,1,New York
+140,Zane,IT,75271,14,Chicago
+141,Tina,Finance,119588,13,San Francisco
+142,Alice,IT,98204,12,Chicago
+143,Xavier,Operations,60900,15,Chicago
+144,Steve,IT,118491,13,San Francisco
+145,Yara,Operations,85378,12,Chicago
+146,Oscar,IT,97318,15,New York
+147,Michael,HR,95190,14,Los Angeles
+148,Fiona,HR,86081,8,Boston
+149,Yara,Operations,112380,2,Boston
+150,Steve,Marketing,90206,15,New York
+151,Edward,Marketing,82925,6,San Francisco
+152,Paula,Marketing,67495,6,Chicago
+153,Quentin,IT,81624,13,Chicago
+154,Edward,Finance,71971,15,New York
+155,Victor,Marketing,43021,15,Los Angeles
+156,Edward,IT,115075,2,Chicago
+157,Alice,Marketing,74061,9,Chicago
+158,Nina,Operations,81462,5,Boston
+159,Wendy,IT,98661,8,New York
+160,Michael,Finance,48599,8,Boston
+161,Rachel,Operations,97691,12,Boston
+162,Victor,Finance,97411,6,New York
+163,Oscar,Operations,105954,8,Boston
+164,Victor,Finance,113723,7,Boston
+165,Ian,Finance,81566,5,New York
+166,Oscar,Marketing,116407,8,Boston
+167,Kevin,Operations,61871,2,Chicago
+168,Rachel,HR,116305,15,Boston
+169,Alice,HR,64679,10,Chicago
+170,Paula,HR,103321,4,Chicago
+171,Bob,Operations,76362,4,Boston
+172,Paula,HR,96706,5,Chicago
+173,Oscar,Marketing,112983,6,New York
+174,Zane,HR,76434,5,Boston
+175,Oscar,Finance,109139,8,Chicago
+176,Ian,Operations,102780,8,Los Angeles
+177,Fiona,Finance,112625,2,Boston
+178,Steve,Marketing,55504,2,San Francisco
+179,Quentin,Operations,95536,6,Los Angeles
+180,George,HR,73707,9,Los Angeles
+181,Kevin,Marketing,57417,2,New York
+182,Yara,Marketing,67590,6,Chicago
+183,George,Finance,106774,6,San Francisco
+184,Oscar,Operations,112283,11,San Francisco
+185,Victor,Marketing,65354,7,San Francisco
+186,Uma,Finance,108350,1,New York
+187,Uma,Operations,58846,8,San Francisco
+188,Rachel,Operations,83860,3,San Francisco
+189,George,Finance,112651,13,New York
+190,Laura,Operations,55822,2,San Francisco
+191,Ian,HR,53795,9,New York
+192,Wendy,HR,90810,2,San Francisco
+193,Paula,IT,71361,13,New York
+194,Rachel,Operations,107099,8,San Francisco
+195,Edward,Finance,61946,15,Los Angeles
+196,Rachel,IT,102891,13,New York
+197,Uma,HR,85091,4,Los Angeles
+198,Uma,Finance,113018,11,Los Angeles
+199,Rachel,Finance,75362,1,San Francisco
+200,Zane,HR,92806,8,New York
