@@ -54,7 +54,26 @@ public class EmployeeStreamExample1 {
                 .sorted(Comparator.comparing(Employee::getSalary).reversed())
                 .forEach(System.out::println);
 
+        //-----------------------------
+        System.out.println("-------------------Collect Examples--------------------------------");
 
+        // Grouping By Example --> Map<String, List<Employee>>
+        var employeesByDept = employeeData.stream().collect(Collectors.groupingBy(Employee::getDepartment));
+        employeesByDept.forEach((dept, empList) -> {
+            System.out.print(dept + " has: ");
+            empList.forEach(e -> System.out.print(e.getName() + ", "));
+            System.out.println();
+        });
 
+        //Grouped by avg Salary by Department --> Map<String, Double>
+        var avgSalaryByDept = employeeData.stream()
+                .collect(Collectors.groupingBy(
+                        Employee::getDepartment,
+                        Collectors.averagingDouble(Employee::getSalary)
+                ));
+
+        avgSalaryByDept.forEach((dept, avgSalary) -> {
+            System.out.println(dept + " has average salary: " + String.format("%.2f", avgSalary));
+        });
     }
 }

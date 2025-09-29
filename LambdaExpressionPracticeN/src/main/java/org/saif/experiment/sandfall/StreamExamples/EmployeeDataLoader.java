@@ -3,6 +3,9 @@ package org.saif.experiment.sandfall.StreamExamples;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -24,6 +27,27 @@ public class EmployeeDataLoader {
                 ))
                 .collect(Collectors.toList());
 //        return employeeData;
+    }
+
+    public static List<Employee2> loadEmployeeData2(String filename) throws IOException {
+        return Files.lines(Paths.get(filename))
+                .skip(1) // Skip header
+                .map(line -> {
+                    String[] fields = line.split(",");
+                    int id = Integer.parseInt(fields[0]);
+                    String name = fields[1];
+                    String department = fields[2];
+                    double salary = Double.parseDouble(fields[3]);
+                    int age = Integer.parseInt(fields[4]);
+                    LocalDate joinDate = LocalDate.parse(fields[5], DateTimeFormatter.ISO_DATE);
+                    int projectsCompleted = Integer.parseInt(fields[6]);
+                    double performanceRating = Double.parseDouble(fields[7]);
+                    List<String> skills = Arrays.asList(fields[8].split(","));
+
+                    return new Employee2(id, name, department, salary, age, joinDate,
+                            projectsCompleted, performanceRating, skills);
+                })
+                .collect(Collectors.toList());
     }
 
 }
