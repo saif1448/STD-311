@@ -23,7 +23,11 @@ public class EmployeeStreamExample2 {
                     + "\n2. Show Unique Skills in the Company"
                     + "\n3. Show Sum of Salaries"
                     + "\n4. Most Common Skills"
-
+                    + "\n5. Employee with Most Project Completed"
+                    + "\n6. Aggregate Sum of Salaries"
+                    + "\n7. Aggregate Operation Example"
+                    + "\n8. Aggregate Statistics Example"
+                    + "\n9. Department Wise Salary Statistics"
                     + "\n0. Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -33,6 +37,11 @@ public class EmployeeStreamExample2 {
                 //reduce
                 case 3 -> sumOfSalaries(employeeData2);
                 case 4 -> mostCommonSkills(employeeData2);
+                case 5 -> mostProjectCompleted(employeeData2);
+                case 6 -> aggregateSumOfSalries(employeeData2);
+                case 7 -> aggregateOperationExample(employeeData2);
+                case 8 -> aggregateStatisticsExample(employeeData2);
+                case 9 -> departmentWiseStatistics(employeeData2);
                 default -> isProgramRunning = false;
             }
         }
@@ -57,7 +66,7 @@ public class EmployeeStreamExample2 {
             2. Average Salary
             3. Max Salary
             4. Statistics Summary ---> DoubleSummaryStatistics
-            5. Count of Employees
+            5. Department wise Salary Statistics Summary
          */
 
         //Grouping
@@ -127,5 +136,125 @@ public class EmployeeStreamExample2 {
 //        });
         System.out.println("-----------------------------------------------------------------------");
     }
+
+
+    private static void mostProjectCompleted(List<Employee2> employeeData2){
+
+        var mostProjectCompleted2 = employeeData2.stream()
+                .reduce((e1, e2) -> e1.getProjectsCompleted() > e2.getProjectsCompleted() ? e1 : e2);
+
+        System.out.println("---------------------Most Project Completed number----------------------");
+
+        mostProjectCompleted2.ifPresent(e -> {
+            System.out.println("Employee Name: " + e.getName() + ", Project Completed: " + e.getProjectsCompleted());
+        });
+
+        var mostProjectCompleted = employeeData2.stream()
+                .collect(Collectors.toMap(e -> e.getName(), e -> e.getProjectsCompleted()))
+//                .collect(Collectors.toMap(Employee2::getName, Employee2::getProjectsCompleted))
+                .entrySet()
+                .stream()
+                .reduce((e1, e2) -> e1.getValue() > e2.getValue() ? e1 : e2);
+
+        System.out.println("---------------------Most Project Completed----------------------");
+        mostProjectCompleted.ifPresent(e -> {
+            System.out.println("Employee Name: " + e.getKey() + ", Project Completed: " + e.getValue());
+        });
+
+        //just only number
+        int noOfMostProjectCompleted = employeeData2.stream()
+                .map(Employee2::getProjectsCompleted)
+                .max(Integer::compare)
+                .orElse(0);
+
+        System.out.println("Most Project Completed Number: " + noOfMostProjectCompleted);
+    }
+
+
+    public static void aggregateSumOfSalries(List<Employee2> employeeData2) {
+        double sumOfSal = employeeData2.stream()
+                .mapToDouble(Employee2::getSalary)
+                .sum();
+        System.out.println("---------------------Sum of Salaries using aggregation----------------------");
+        System.out.println("Sum of Salaries: " + String.format("%.2f", sumOfSal));
+    }
+
+    public static void aggregateOperationExample(List<Employee2> employeeData2) {
+
+        // Sum of salaries using aggregation
+
+        double sumOfSal = employeeData2.stream()
+                .mapToDouble(Employee2::getSalary)
+                .sum();
+        System.out.println("---------------------Example of Aggregation----------------------");
+        System.out.println("Sum of Salaries: " + String.format("%.2f", sumOfSal));
+
+        // Average Salary
+        double avgSal = employeeData2.stream()
+                .mapToDouble(Employee2::getSalary)
+                .average()
+                .orElse(0.0);
+
+        System.out.println("Average Salary: " + String.format("%.2f", avgSal));
+
+        // Max Salary
+
+        double maxSal = employeeData2.stream()
+                .mapToDouble(Employee2::getSalary)
+                .max()
+                .orElse(0.0);
+
+        System.out.println("Max Salary: " + String.format("%.2f", maxSal));
+
+        //Min Salary
+        double minSal = employeeData2.stream()
+                .mapToDouble(Employee2::getSalary)
+                .min()
+                .orElse(0.0);
+        System.out.println("Min Salary: " + String.format("%.2f", minSal));
+
+        var distinctSalary = employeeData2.stream()
+                .mapToDouble(Employee2::getSalary)
+                .distinct()
+                .count();
+
+        System.out.println("Distinct Salary Count: " + distinctSalary);
+    }
+
+    public static void aggregateStatisticsExample(List<Employee2> employeeData2) {
+        DoubleSummaryStatistics statistics = employeeData2.stream()
+                .mapToDouble(Employee2::getSalary)
+                .summaryStatistics();
+
+        System.out.println("---------------------Statistics Summary----------------------");
+        System.out.println("Count: " + statistics.getCount());
+        System.out.println("Sum: " + String.format("%.2f", statistics.getSum()));
+        System.out.println("Min: " + String.format("%.2f", statistics.getMin()));
+        System.out.println("Max: " + String.format("%.2f", statistics.getMax()));
+        System.out.println("Average: " + String.format("%.2f", statistics.getAverage()));
+        System.out.println("-----------------------------------------------------------------------");
+
+    }
+
+    public static void departmentWiseStatistics(List<Employee2> employeeData2) {
+        var deptWiseStatistics = employeeData2.stream()
+                .collect(Collectors.groupingBy(
+                        Employee2::getDepartment,
+                        Collectors.summarizingDouble(Employee2::getSalary)
+                )).entrySet();
+
+        System.out.println("---------------------Department Wise Salary Statistics----------------------");
+        System.out.println("----------Dept Wise Max Salary----------------");
+        deptWiseStatistics.forEach((e) -> System.out.println(e.getKey() + ": " + e.getValue().getMax()));
+
+        System.out.println("----------Dept Wise Min Salary----------------");
+        deptWiseStatistics.forEach((e) -> System.out.println(e.getKey() + ": " + e.getValue().getMin()));
+
+        System.out.println("----------Dept Wise Average Salary----------------");
+        deptWiseStatistics.forEach((e) -> System.out.println(e.getKey() + ": " + String.format("%.2f", e.getValue().getAverage())));
+
+        System.out.println("-----------------------------------------------------------------------");
+    }
+
 
 }
