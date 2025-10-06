@@ -28,6 +28,16 @@ public class EmployeeStreamExample2 {
                     + "\n7. Aggregate Operation Example"
                     + "\n8. Aggregate Statistics Example"
                     + "\n9. Department Wise Salary Statistics"
+                    + "\n10. Group by Department Example"
+                    + "\n11. Group by Department and Age Example"
+                    + "\n12. Group by Department and Average Salary Example"
+                    + "\n13. Group by Department with Employee Count Example"
+                    + "\n14. Group Skills by Department Example"
+                    + "\n15. Group by Performance Rating Range Example"
+                    + "\n16. Check if all employees have salary > 50000"
+                    + "\n17. Check if any employee has completed more than 10 projects"
+                    + "\n18. Find First Employee in HR Department"
+                    + "\n19. Find Any Employee in IT Department"
                     + "\n0. Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -38,10 +48,23 @@ public class EmployeeStreamExample2 {
                 case 3 -> sumOfSalaries(employeeData2);
                 case 4 -> mostCommonSkills(employeeData2);
                 case 5 -> mostProjectCompleted(employeeData2);
+                //aggregate
                 case 6 -> aggregateSumOfSalries(employeeData2);
                 case 7 -> aggregateOperationExample(employeeData2);
                 case 8 -> aggregateStatisticsExample(employeeData2);
                 case 9 -> departmentWiseStatistics(employeeData2);
+                //grouping
+                case 10 -> groupByDepartmentExample(employeeData2);
+                case 11 -> groupByDeptAndAge(employeeData2);
+                case 12 -> groupByDeptAndAvgSal(employeeData2);
+                case 13 -> groupByDeptWithEmpCount(employeeData2);
+                case 14 -> groupSkillsByDepartment(employeeData2);
+                case 15 -> groupByPerformanceRatingRange(employeeData2);
+                //matching and finding
+                case 16 -> ifAllSalaryGreater50000(employeeData2);
+                case 17 -> ifAnyCompletedMore10Projects(employeeData2);
+                case 18 -> findFirstHREmployee(employeeData2);
+                case 19 -> findAnyITEmployee(employeeData2);
                 default -> isProgramRunning = false;
             }
         }
@@ -72,11 +95,32 @@ public class EmployeeStreamExample2 {
         //Grouping
         /*
             1. Group by Department
-            2. Group by Department and Location
+            2. Group by Department and Age
             3. Group by Department and Average Salary
             4. Group by Department with Employee Count
             5. Group skills by Department
             6. Group by performance rating range
+         */
+
+
+        //Matching and Finding
+        /*
+            1. Check if all employees have salary > 50000
+            2. Check if any employee has completed more than 10 projects
+            3. Find the first employee in the list
+            4. Find any employee from 'IT' department
+         */
+
+
+        //Partitioning
+        /*
+            1. Partition employees based on salary > 7000
+            2. Partition employees based on skills containing 'Java'
+         */
+        //Parallel Streams
+        /*
+            1. Calculate sum of salaries using parallel stream
+            2. Find max salary using parallel stream
          */
 
     }
@@ -256,5 +300,179 @@ public class EmployeeStreamExample2 {
         System.out.println("-----------------------------------------------------------------------");
     }
 
+    //Grouping Examples
+
+    public static void groupByDepartmentExample(List<Employee2> employeeData2) {
+
+        System.out.println("---------------------Group by Department Example----------------------");
+
+        var groupByDept = employeeData2.stream()
+                .collect(Collectors.groupingBy(Employee2::getDepartment));
+
+        groupByDept.forEach((dept, empList) -> {
+            System.out.println("Department: " + dept);
+            empList.forEach(e -> System.out.println("\t" + e.getName()));
+        });
+
+        System.out.println("-----------------------------------------------------------------------");
+    }
+
+    public static void groupByDeptAndAge(List<Employee2> employeeData2) {
+
+        System.out.println("---------------------Group by Department and Age Example----------------------");
+
+        var groupByDeptAndAge = employeeData2.stream()
+                        .collect(Collectors.groupingBy(
+                                Employee2::getDepartment,
+                                Collectors.groupingBy(Employee2::getAge)
+                        ));
+        groupByDeptAndAge.forEach((dept, age) -> {
+            System.out.println("Department: " + dept);
+            age.forEach((ageKey, empList) -> {
+                System.out.println("\tAge: " + ageKey);
+                empList.forEach(e -> System.out.println("\t\t" + e.getName()));
+            });
+        });
+
+        System.out.println("-----------------------------------------------------------------------");
+
+    }
+
+
+    public static void groupByDeptAndAvgSal(List<Employee2> employeeData2) {
+
+        System.out.println("---------------------Group by Department and Average Salary Example----------------------");
+        var groupByDeptAndAvgSal = employeeData2.stream()
+                .collect(Collectors.groupingBy(
+                        Employee2::getDepartment,
+                        Collectors.averagingDouble(Employee2::getSalary)
+                ));
+
+        groupByDeptAndAvgSal.forEach((dept, avgSal) -> {
+            System.out.println("Department: " + dept + ", Average Salary: " + String.format("%.2f", avgSal));
+        });
+
+
+        System.out.println("-----------------------------------------------------------------------");
+
+    }
+
+    public static void groupByDeptWithEmpCount(List<Employee2> employeeData2) {
+
+        System.out.println("---------------------Group by Department with Employee Count Example----------------------");
+
+        var countByDept = employeeData2.stream()
+                .collect(Collectors.groupingBy(
+                        Employee2::getDepartment,
+                        Collectors.counting()
+                ));
+
+        countByDept.forEach((dept, count) -> {
+            System.out.println("Department: " + dept + ", Employee Count: " + count);
+        });
+
+        System.out.println("-----------------------------------------------------------------------");
+
+    }
+
+
+    public static void groupSkillsByDepartment(List<Employee2> employeeData2) {
+        System.out.println("---------------------Group Skills by Department Example----------------------");
+
+        var groupSkillsByDepartment = employeeData2.stream()
+                        .collect(Collectors.groupingBy(
+                                Employee2::getDepartment,
+                                Collectors.flatMapping(
+                                        e -> e.getSkills().stream(),
+                                        Collectors.toSet()
+                                )
+                        ));
+//        var groupSkillsByDepartment = employeeData2.stream()
+//                .collect(Collectors.groupingBy(
+//                        Employee2::getDepartment,
+//                        Collectors.mapping(
+//                                Employee2::getSkills,
+//                                Collectors.flatMapping(Collection::stream, Collectors.toSet())
+//                        )
+//                ));
+
+        groupSkillsByDepartment.forEach((dept, skills) -> {
+            System.out.println("Department: " + dept);
+            skills.forEach(skill -> System.out.println("\t" + skill));
+        });
+
+        System.out.println("-----------------------------------------------------------------------");
+    }
+
+
+    public static void groupByPerformanceRatingRange(List<Employee2> employeeData2) {
+        System.out.println("---------------------Group by Performance Rating Range Example----------------------");
+
+        var groupByPerformanceRatingRange = employeeData2.stream()
+                        .collect(Collectors.groupingBy( e -> {
+                            double rating = e.getPerformanceRating();
+                            if (rating >= 4.7) return "Excellent";
+                            else if (rating >= 4.5) return "Very Good";
+                            else if (rating >= 4.2) return "Good";
+                            else if (rating >= 4.0) return "Average";
+                            else return "Below Average";
+                        }
+                        ));
+
+        groupByPerformanceRatingRange.forEach((rating, emplList) ->{
+            System.out.println("Performance Rating: " + rating);
+            emplList.forEach(e -> System.out.println("\t" + e.getName() + ", Rating: " + e.getPerformanceRating()));
+        });
+
+        System.out.println("-----------------------------------------------------------------------");
+    }
+
+    // Matching and Finding Examples
+
+    public static void ifAllSalaryGreater50000(List<Employee2> employeeData2) {
+        System.out.println("---------------------Check if all employees have salary > 50000----------------------");
+        var ifAllSalaryGreater50000 = employeeData2.stream()
+                .allMatch(e -> e.getSalary() > 50000);
+        System.out.println("All employees have salary > 50000: " + ifAllSalaryGreater50000);
+        System.out.println("-----------------------------------------------------------------------");
+    }
+
+    public static void ifAnyCompletedMore10Projects(List<Employee2> employeeData2) {
+        System.out.println("---------------------Check if any employee has completed more than 10 projects----------------------");
+        var ifAnyCompletedMore10Projects = employeeData2.stream()
+                        .anyMatch(e -> e.getProjectsCompleted() > 10);
+        System.out.println("Any employee has completed more than 10 projects: " + ifAnyCompletedMore10Projects);
+
+        var employee = employeeData2.stream()
+                    .filter(e -> e.getProjectsCompleted() > 10)
+                    .findFirst(); // findAny can also be used
+        employee.ifPresent(e -> {
+            System.out.println("Employee Name: " + e.getName() + ", Projects Completed: " + e.getProjectsCompleted());
+        });
+        System.out.println("-----------------------------------------------------------------------");
+    }
+
+    public static void findFirstHREmployee(List<Employee2> employeeData2) {
+        System.out.println("---------------------Find First Employee in HR Department----------------------");
+        var firstHREmployee = employeeData2.stream()
+                .filter(e -> e.getDepartment().equals("HR"))
+                .findFirst();
+        firstHREmployee.ifPresent(e ->{
+            System.out.println("Employee Name: " + e.getName() + ", Department: " + e.getDepartment());
+        });
+        System.out.println("-----------------------------------------------------------------------");
+    }
+
+    public static void findAnyITEmployee(List<Employee2> employeeData2) {
+        System.out.println("---------------------Find Any Employee in IT Department----------------------");
+        var anyITEmployee = employeeData2.stream()
+                        .filter(e -> e.getDepartment().equals("Engineering"))
+                        .findAny();
+        anyITEmployee
+                .ifPresent(e -> {
+                    System.out.println("Employee Name: " + e.getName() + ", Department: " + e.getDepartment());
+                });
+        System.out.println("-----------------------------------------------------------------------");
+    }
 
 }
