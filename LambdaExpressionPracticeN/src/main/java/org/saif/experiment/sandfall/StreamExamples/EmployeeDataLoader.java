@@ -12,9 +12,10 @@ import java.util.stream.Collectors;
 
 public class EmployeeDataLoader {
 
-    public static List<Employee> loadEmployeeData(String filePath) throws IOException {
-//        List<Employee> employeeData =
-               return Files.lines(Paths.get(filePath))
+    public static List<Employee> loadEmployeeData(String fileName) throws IOException {
+        // Use relative path from the current package
+        String filePath = "src/main/java/org/saif/experiment/sandfall/StreamExamples/" + fileName;
+        return Files.lines(Paths.get(filePath))
                 .skip(1) // skipping the header row
                 .map(line -> line.split(","))
                 .map(rowData -> new Employee(  //rowData is an array of String
@@ -26,7 +27,6 @@ public class EmployeeDataLoader {
                         rowData[5] //Location ---> String
                 ))
                 .collect(Collectors.toList());
-//        return employeeData;
     }
 
     public static List<Employee2> loadEmployeeData2(String filename) throws IOException {

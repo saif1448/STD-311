@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class EmployeeStreamExample1 {
 
     public static void main(String[] args) throws IOException {
-        List<Employee> employeeData = EmployeeDataLoader.loadEmployeeData("D:\\Saif\\Teaching\\StudentCourseCodeExamples\\STD-311\\STD-311Practice\\LambdaExpressionPracticeN\\src\\main\\java\\org\\saif\\experiment\\sandfall\\StreamExamples\\employees_100.csv");
+        List<Employee> employeeData = EmployeeDataLoader.loadEmployeeData("employees_100.csv");
 
         System.out.println("----------------Employee Data----------------------");
         System.out.println();
